@@ -1,6 +1,6 @@
 node("") {
     stage("build") {
-        git("https://github.com/dhananjay12/continuous-delivery-simple-spring-project.git")
+        git("https://github.com/dhananjay12/ci-cd-spring-project.git")
         sh("./mvnw clean install")
     }
     stage("deploy") {
