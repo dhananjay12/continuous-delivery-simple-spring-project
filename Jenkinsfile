@@ -1,7 +1,7 @@
 node("") {
     stage("build") {
         git("https://github.com/dhananjay12/ci-cd-spring-project.git")
-        sh("./mvnw clean install")
+        sh("mvn clean install")
     }
     stage("deploy") {
         echo("Deploying the artifact")
