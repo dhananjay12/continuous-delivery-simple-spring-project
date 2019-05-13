@@ -60,6 +60,35 @@
 				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>3.0.0-M3</version>
 			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.30.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<verbose>true</verbose>
+					<images>
+						<image>
+							<name>${project.artifactId}</name>
+							<build>
+								<contextDir>${project.basedir}</contextDir>
+								<assembly>
+									<descriptorRef>artifact</descriptorRef>
+								</assembly>
+							</build>
+						</image>
+					</images>
+				</configuration>
+				<executions>
+					<execution>
+						<id>build</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
