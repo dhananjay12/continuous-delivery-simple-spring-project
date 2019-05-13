@@ -16,6 +16,11 @@ public class MyController {
         return ResponseEntity.ok("Hi "+name);
     }
 
+    @GetMapping(value = "/bye/{name}")
+    public ResponseEntity<?> bye(@PathVariable String name){
+        return ResponseEntity.ok("Bye "+name);
+    }
+
     @GetMapping(value = "/add")
     public ResponseEntity<?> hello(@RequestParam int num1,@RequestParam int num2){
         int result=num1+num2;
