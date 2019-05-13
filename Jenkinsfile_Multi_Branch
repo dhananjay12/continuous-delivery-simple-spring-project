@@ -55,8 +55,11 @@ pipeline {
             }
             steps{
                 echo "----Building master----"
-                sh "mvn clean verify"
-                sh "docker tag dhananjay12/${ARTIFACT_ID}:latest dhananjay12/${ARTIFACT_ID}:${VERSION}"
+                // --batch-mode doesnt ask release version and take defaults from POM
+                sh "mvn clean --batch-mode release:prepare"
+                VERSION_NEW = readMavenPom().getVersion()
+                sh "docker tag dhananjay12/${ARTIFACT_ID}:latest dhananjay12/${ARTIFACT_ID}:${VERSION_NEW}"
+                sh "mvn clean --batch-mode release:perform -D maven.test.skip=true -D docker.skip"
             }
         }
         stage('Results') {
