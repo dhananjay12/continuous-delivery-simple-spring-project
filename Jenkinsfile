@@ -54,20 +54,37 @@ pipeline {
 
         stage('Push image') {
             steps{
+                echo "Trying to Push Docker Build to DockerHub"
                 /*
                 You would need to first register with DockerHub before you can push images to your account
             */
-                withRegistry('https://registry.hub.docker.com', 'docker-hub') {
-                    sh "docker push dhananjay12/${ARTIFACT_ID}:${VERSION}"
-                    sh "docker push dhananjay12/${ARTIFACT_ID}:latest"
+//                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
+//                    sh "docker push dhananjay12/${ARTIFACT_ID}:${VERSION}"
+//                    sh "docker push dhananjay12/${ARTIFACT_ID}:latest"
+//                }
+
+                withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPwd')]) {
+                    sh "docker login -u dhananjay12 -p ${dockerHubPwd}"
                 }
-                echo "Trying to Push Docker Build to DockerHub"
+                sh "docker push dhananjay12/${ARTIFACT_ID}:${VERSION}"
+                sh "docker push dhananjay12/${ARTIFACT_ID}:latest"
+
             }
 
         }
     }
 
     post {
+        always {
+            echo 'One way or another, I have finished'
+            deleteDir() /* clean up our workspace */
+        }
+        success {
+            echo 'I succeeeded!'
+//            slackSend channel: '#ops-room',
+//                    color: 'good',
+//                    message: "The pipeline ${currentBuild.fullDisplayName} completed successfully."
+        }
         failure {
             echo "Job Failed"
             // notify users when the Pipeline fails
