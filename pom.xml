@@ -69,7 +69,8 @@
 					<verbose>true</verbose>
 					<images>
 						<image>
-							<name>${project.artifactId}</name>
+							<alias>${project.artifactId}</alias>
+							<name>dhananjay12/${project.artifactId}</name>
 							<build>
 								<contextDir>${project.basedir}</contextDir>
 								<assembly>
