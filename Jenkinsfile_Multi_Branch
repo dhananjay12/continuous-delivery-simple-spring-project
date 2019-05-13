@@ -40,8 +40,21 @@ pipeline {
             }
         }
         stage('Build') {
+            when {
+                not { branch 'master' }
+            }
+            echo "----Building PR----"
             steps{
-                //sh "'${mvnHome}/bin/mvn' clean install"
+                sh "mvn clean verify"
+                sh "docker tag dhananjay12/${ARTIFACT_ID}:latest dhananjay12/${ARTIFACT_ID}:${VERSION}"
+            }
+        }
+        stage('RELEASE') {
+            when {
+                branch 'master'
+            }
+            echo "----Building master----"
+            steps{
                 sh "mvn clean install"
                 sh "docker tag dhananjay12/${ARTIFACT_ID}:latest dhananjay12/${ARTIFACT_ID}:${VERSION}"
             }
