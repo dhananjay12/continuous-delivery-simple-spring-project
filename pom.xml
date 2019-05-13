@@ -4,7 +4,7 @@
 
 	<groupId>com.mynotes</groupId>
 	<artifactId>ci-cd-spring-project</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>ci-cd-spring-project</name>
@@ -30,7 +30,7 @@
 		<developerConnection>scm:git:https://github.com/dhananjay12/ci-cd-spring-project</developerConnection>
 		<!--<url> tag is for a regular browsable URL-->
 		<url>https://github.com/dhananjay12/ci-cd-spring-project.git</url>
-		<tag>ci-cd-spring-project-0.0.3</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<dependencies>
