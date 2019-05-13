@@ -43,8 +43,8 @@ pipeline {
             when {
                 not { branch 'master' }
             }
-            echo "----Building PR----"
             steps{
+                echo "----Building PR----"
                 sh "mvn clean verify"
                 sh "docker tag dhananjay12/${ARTIFACT_ID}:latest dhananjay12/${ARTIFACT_ID}:${VERSION}"
             }
@@ -53,8 +53,8 @@ pipeline {
             when {
                 branch 'master'
             }
-            echo "----Building master----"
             steps{
+                echo "----Building master----"
                 sh "mvn clean install"
                 sh "docker tag dhananjay12/${ARTIFACT_ID}:latest dhananjay12/${ARTIFACT_ID}:${VERSION}"
             }
