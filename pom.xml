@@ -24,6 +24,16 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+	<scm>
+		<!--<connection> is for read access-->
+		<connection>scm:git:ssh://git@github.com:dhananjay12/ci-cd-spring-project.git</connection>
+		<!--<developerConnection> is for write access-->
+		<developerConnection>scm:git:ssh://git@github.com:dhananjay12/ci-cd-spring-project.git</developerConnection>
+		<!--<url> tag is for a regular browsable URL-->
+		<url>https://github.com/dhananjay12/ci-cd-spring-project.git</url>
+		<tag>HEAD</tag>
+	</scm>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

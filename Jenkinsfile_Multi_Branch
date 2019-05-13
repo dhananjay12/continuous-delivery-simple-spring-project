@@ -55,7 +55,7 @@ pipeline {
             }
             steps{
                 echo "----Building master----"
-                sh "mvn clean install"
+                sh "mvn clean verify"
                 sh "docker tag dhananjay12/${ARTIFACT_ID}:latest dhananjay12/${ARTIFACT_ID}:${VERSION}"
             }
         }
