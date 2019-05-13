@@ -28,7 +28,7 @@
 		<!--<connection> is for read access-->
 		<connection>scm:git:ssh://git@github.com/ci-cd-spring-project.git</connection>
 		<!--<developerConnection> is for write access-->
-		<developerConnection>scm:git:ssh://git@github.com/ci-cd-spring-project.git</developerConnection>
+		<developerConnection>scm:git:https://github.com/dhananjay12/ci-cd-spring-project</developerConnection>
 		<!--<url> tag is for a regular browsable URL-->
 		<url>https://github.com/dhananjay12/ci-cd-spring-project.git</url>
 		<tag>HEAD</tag>
