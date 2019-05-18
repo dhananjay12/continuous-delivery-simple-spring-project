@@ -29,8 +29,9 @@ pipeline {
         // mvnHome = tool 'maven_3.6.1'
         // Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
         ARTIFACT_ID = readMavenPom().getArtifactId()
-        VERSION = readMavenPom().getVersion()
-        VERSION_NEW = readMavenPom().getVersion()
+
+        //Not setting Version here as this needs to be changes in a stage
+        //VERSION = readMavenPom().getVersion()
     }
 
     stages  {
@@ -39,6 +40,7 @@ pipeline {
                 // Get some code from a GitHub repository
                 deleteDir()
                 checkout scm
+                env.VERSION = readMavenPom().getVersion()
             }
         }
         stage('Build') {
