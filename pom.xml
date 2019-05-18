@@ -24,7 +24,7 @@
 	</properties>
 
 	<scm>
-		<developerConnection>scm:git:https://github.com/dhananjay12/ci-cd-spring-project</developerConnection>
+		<developerConnection>scm:git:https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/dhananjay12/ci-cd-spring-project</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
