@@ -66,10 +66,10 @@ pipeline {
                                   usernameVariable: 'GIT_USERNAME',
                                   passwordVariable: 'GIT_PASSWORD'
                                  ]]) {
-                    sh 'mvn clean --batch-mode release:prepare'
+                    sh 'mvn clean verify'
+                    //Performing release:prepare/perform in another step to skip test and docker image (which is failing) creation
+                    sh "mvn clean --batch-mode release:prepare release:perform -D maven.test.skip=true -D docker.skip"
                     sh 'env.VERSION=readMavenPom().getVersion()'
-                    //Performing release:perform in another step to skip test and docker image (which is failing) creation
-                    sh "mvn clean --batch-mode release:perform -D maven.test.skip=true -D docker.skip"
                 }
 
             }
