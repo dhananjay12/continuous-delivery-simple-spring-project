@@ -48,20 +48,25 @@ pipeline {
             steps{
                 echo "----Building PR----"
                 sh "mvn clean verify"
-                sh "docker tag dhananjay12/${ARTIFACT_ID}:latest dhananjay12/${ARTIFACT_ID}:${VERSION}"
             }
         }
-        stage('RELEASE') {
+        stage('RELEASE-MASTER') {
             when {
                 branch 'master'
             }
             steps{
                 echo "----Building master----"
                 // --batch-mode doesnt ask release version and take defaults from POM
-                sh "mvn clean --batch-mode release:prepare"
-                sh "docker tag dhananjay12/${ARTIFACT_ID}:latest dhananjay12/${ARTIFACT_ID}:${readMavenPom().getVersion()}"
-                sh "mvn clean --batch-mode release:perform -D maven.test.skip=true -D docker.skip"
+                sh "mvn clean --batch-mode release:prepare release:perform"
+                VERSION=readMavenPom().getVersion()
             }
+        }
+        stage('TAG-DOCKER-IMAGE') {
+            steps {
+                sh "docker tag dhananjay12/${ARTIFACT_ID}:latest dhananjay12/${ARTIFACT_ID}:${VERSION}"
+
+            }
+
         }
         stage('Results') {
             steps{
@@ -72,15 +77,7 @@ pipeline {
         stage('Push image') {
             steps{
                 echo "Trying to Push Docker Build to DockerHub"
-                /*
-                You would need to first register with DockerHub before you can push images to your account
-            */
-//                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
-//                    sh "docker push dhananjay12/${ARTIFACT_ID}:${VERSION}"
-//                    sh "docker push dhananjay12/${ARTIFACT_ID}:latest"
-//                }
-
-                withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPwd')]) {
+               withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPwd')]) {
                     sh "docker login -u dhananjay12 -p ${dockerHubPwd}"
                 }
                 sh "docker push dhananjay12/${ARTIFACT_ID}:${VERSION}"
