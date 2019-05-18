@@ -41,7 +41,7 @@ public class MyControllerTest {
 		get(uri + "/hello/" + "test")
 				.then()
 				.assertThat().statusCode(HttpStatus.OK.value())
-				.body( containsString("Hi test"));
+				.body( containsString("Hello test"));
 	}
 
 	@Test

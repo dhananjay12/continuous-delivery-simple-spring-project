@@ -24,14 +24,48 @@
 	</properties>
 
 	<scm>
-		<!--<connection> is for read access-->
-		<connection>scm:git:ssh://git@github.com/ci-cd-spring-project.git</connection>
-		<!--<developerConnection> is for write access-->
 		<developerConnection>scm:git:https://github.com/dhananjay12/ci-cd-spring-project</developerConnection>
-		<!--<url> tag is for a regular browsable URL-->
-		<url>https://github.com/dhananjay12/ci-cd-spring-project.git</url>
 		<tag>HEAD</tag>
 	</scm>
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<distributionManagement>
+				<repository>
+					<id>internal-release</id>
+					<name>Release Candidate</name>
+					<url>http://localhost:9999/repository/maven-promoted/</url>
+				</repository>
+				<snapshotRepository>
+					<id>snapshot</id>
+					<name>Snapshot Repo</name>
+					<url>http://localhost:9999/repository/maven-snapshots/</url>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
+		<profile>
+			<id>public-release</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>publicRepo</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<distributionManagement>
+				<repository>
+					<id>public-repo</id>
+					<name>Released  Repo</name>
+					<url>http://localhost:9999/repository/maven-public/</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+	</profiles>
+
 
 	<dependencies>
 		<dependency>
