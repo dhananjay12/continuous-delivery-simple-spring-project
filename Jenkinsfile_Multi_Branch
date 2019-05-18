@@ -68,9 +68,9 @@ pipeline {
                                  ]]) {
                     sh 'mvn clean verify'
                     //Performing release:prepare/perform in another step to skip test and docker image (which is failing) creation
-                    sh "mvn --batch-mode release:prepare -D maven.test.skip=true -D docker.skip"
-                    sh "mvn --batch-mode release:perform -D maven.test.skip=true -D docker.skip"
-                    h 'env.VERSION=readMavenPom().getVersion()'
+                    sh "mvn --batch-mode release:prepare release:perform -Dmaven.test.skip=true -Ddocker.skip"
+                    //sh "mvn --batch-mode release:perform -Dmaven.test.skip=true -Ddocker.skip"
+                    sh 'env.VERSION=readMavenPom().getVersion()'
                 }
 
             }
