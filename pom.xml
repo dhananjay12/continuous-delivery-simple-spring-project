@@ -4,7 +4,7 @@
 
 	<groupId>com.mynotes</groupId>
 	<artifactId>ci-cd-spring-project</artifactId>
-	<version>0.0.11-SNAPSHOT</version>
+	<version>0.0.11</version>
 	<packaging>jar</packaging>
 
 	<name>ci-cd-spring-project</name>
@@ -25,7 +25,7 @@
 
 	<scm>
 		<developerConnection>scm:git:https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/dhananjay12/ci-cd-spring-project</developerConnection>
-		<tag>HEAD</tag>
+		<tag>ci-cd-spring-project-0.0.11</tag>
 	</scm>
 
 	<profiles>
