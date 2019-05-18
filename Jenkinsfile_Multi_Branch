@@ -40,7 +40,7 @@ pipeline {
                 // Get some code from a GitHub repository
                 deleteDir()
                 checkout scm
-                env.VERSION = readMavenPom().getVersion()
+                sh 'env.VERSION = readMavenPom().getVersion()'
             }
         }
         stage('Build') {
@@ -49,7 +49,7 @@ pipeline {
             }
             steps{
                 echo "----Building PR----"
-                sh "mvn clean verify"
+                sh 'mvn clean verify'
             }
         }
         stage('RELEASE-MASTER') {
@@ -59,13 +59,13 @@ pipeline {
             steps{
                 echo "----Building master----"
                 // --batch-mode doesnt ask release version and take defaults from POM
-                sh "mvn clean --batch-mode release:prepare release:perform"
-                env.VERSION=readMavenPom().getVersion()
+                sh 'mvn clean --batch-mode release:prepare release:perform'
+                sh 'env.VERSION=readMavenPom().getVersion()'
             }
         }
         stage('TAG-DOCKER-IMAGE') {
             steps {
-                sh "docker tag dhananjay12/${ARTIFACT_ID}:latest dhananjay12/${ARTIFACT_ID}:${VERSION}"
+                sh 'docker tag dhananjay12/${ARTIFACT_ID}:latest dhananjay12/${ARTIFACT_ID}:${VERSION}'
 
             }
 
@@ -80,10 +80,10 @@ pipeline {
             steps{
                 echo "Trying to Push Docker Build to DockerHub"
                withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPwd')]) {
-                    sh "docker login -u dhananjay12 -p ${dockerHubPwd}"
+                    sh 'docker login -u dhananjay12 -p ${dockerHubPwd}'
                 }
-                sh "docker push dhananjay12/${ARTIFACT_ID}:${VERSION}"
-                sh "docker push dhananjay12/${ARTIFACT_ID}:latest"
+                sh 'docker push dhananjay12/${ARTIFACT_ID}:${VERSION}'
+                sh 'docker push dhananjay12/${ARTIFACT_ID}:latest'
 
             }
 
