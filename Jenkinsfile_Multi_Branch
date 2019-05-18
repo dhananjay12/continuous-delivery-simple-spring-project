@@ -58,7 +58,7 @@ pipeline {
                 echo "----Building master----"
                 // --batch-mode doesnt ask release version and take defaults from POM
                 sh "mvn clean --batch-mode release:prepare release:perform"
-                VERSION=readMavenPom().getVersion()
+                env.VERSION=readMavenPom().getVersion()
             }
         }
         stage('TAG-DOCKER-IMAGE') {
