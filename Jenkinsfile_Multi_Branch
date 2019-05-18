@@ -37,7 +37,8 @@ pipeline {
         stage('Preparation') { // for display purposes
             steps{
                 // Get some code from a GitHub repository
-                git 'https://github.com/dhananjay12/ci-cd-spring-project.git'
+                deleteDir()
+                checkout scm
             }
         }
         stage('Build') {
