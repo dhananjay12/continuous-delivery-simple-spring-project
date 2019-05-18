@@ -39,7 +39,7 @@ pipeline {
             steps{
                 // Get some code from a GitHub repository
                 deleteDir()
-                checkout scm
+                checkout([$class: 'GitSCM', branches: [[name: 'master']], extensions: [[$class: 'LocalBranch', localBranch: "**"]]]) scm
                 script{
                     env.VERSION = readMavenPom().getVersion()
                 }
