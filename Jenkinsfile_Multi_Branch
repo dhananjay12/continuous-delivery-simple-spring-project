@@ -61,7 +61,13 @@ pipeline {
                 echo "----Building master----"
                 sh 'git checkout master'
                 // --batch-mode doesnt ask release version and take defaults from POM
-                sh 'mvn clean --batch-mode release:prepare release:perform'
+                withCredentials([[$class: 'UsernamePasswordMultiBinding',
+                                  credentialsId: 'github-username-pass',
+                                  usernameVariable: 'GIT_USERNAME',
+                                  passwordVariable: 'GIT_PASSWORD'
+                                 ]]) {
+                    sh 'mvn clean --batch-mode release:prepare release:perform'
+                }
                 sh 'env.VERSION=readMavenPom().getVersion()'
             }
         }
