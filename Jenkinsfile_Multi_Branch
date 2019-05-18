@@ -40,7 +40,9 @@ pipeline {
                 // Get some code from a GitHub repository
                 deleteDir()
                 checkout scm
-                sh 'env.VERSION = readMavenPom().getVersion()'
+                script{
+                    env.VERSION = readMavenPom().getVersion()
+                }
             }
         }
         stage('Build') {
