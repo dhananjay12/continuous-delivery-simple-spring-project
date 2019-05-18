@@ -38,8 +38,7 @@ pipeline {
         stage('Preparation') { // for display purposes
             steps{
                 // Get some code from a GitHub repository
-                deleteDir()
-                checkout([$class: 'GitSCM', branches: [[name: 'master']], extensions: [[$class: 'LocalBranch', localBranch: "**"]]]) scm
+                checkout scm
                 script{
                     env.VERSION = readMavenPom().getVersion()
                 }
@@ -60,6 +59,7 @@ pipeline {
             }
             steps{
                 echo "----Building master----"
+                sh 'git checkout master'
                 // --batch-mode doesnt ask release version and take defaults from POM
                 sh 'mvn clean --batch-mode release:prepare release:perform'
                 sh 'env.VERSION=readMavenPom().getVersion()'
