@@ -28,43 +28,19 @@
 		<tag>HEAD</tag>
 	</scm>
 
-	<profiles>
-		<profile>
-			<id>default</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<distributionManagement>
-				<repository>
-					<id>internal-release</id>
-					<name>Release Candidate</name>
-					<url>http://localhost:9999/repository/maven-promoted/</url>
-				</repository>
-				<snapshotRepository>
-					<id>snapshot</id>
-					<name>Snapshot Repo</name>
-					<url>http://localhost:9999/repository/maven-snapshots/</url>
-				</snapshotRepository>
-			</distributionManagement>
-		</profile>
-		<profile>
-			<id>public-release</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-				<property>
-					<name>publicRepo</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<distributionManagement>
-				<repository>
-					<id>public-repo</id>
-					<name>Released  Repo</name>
-					<url>http://localhost:9999/repository/maven-public/</url>
-				</repository>
-			</distributionManagement>
-		</profile>
-	</profiles>
+	<distributionManagement>
+		<repository>
+			<id>internal-release</id>
+			<name>Release Candidate</name>
+			<url>http://localhost:9999/repository/maven-promoted/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshot</id>
+			<name>Snapshot Repo</name>
+			<url>http://localhost:9999/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 
 
 	<dependencies>
@@ -103,6 +79,20 @@
 				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>3.0.0-M3</version>
 			</plugin>
+
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>docker</id>
+			<activation>
+				<property>
+					<name>docker</name>
+				</property>
+			</activation>
+			<build>
+			<plugins>
 			<plugin>
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
@@ -133,8 +123,10 @@
 					</execution>
 				</executions>
 			</plugin>
-		</plugins>
-	</build>
+			</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 
 </project>
