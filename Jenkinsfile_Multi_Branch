@@ -63,8 +63,8 @@ pipeline {
                 // --batch-mode doesnt ask release version and take defaults from POM
                 //(Pls use single quotes) This way the values also get substituted and are outputted in the logs as masked
                 withCredentials([
-                        usernamePassword(credentialsId: github-username-pass, usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD'),
-                        usernamePassword(credentialsId: maven-user-promoted, usernameVariable: 'promotedUser', passwordVariable: 'promotedPassword')
+                        usernamePassword(credentialsId: 'github-username-pass', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD'),
+                        usernamePassword(credentialsId: 'maven-user-promoted', usernameVariable: 'promotedUser', passwordVariable: 'promotedPassword')
                 ]) {
                     sh 'mvn clean verify -Pdocker'
                     //Performing release:prepare/perform in another step to skip test and docker image (which is failing) creation
