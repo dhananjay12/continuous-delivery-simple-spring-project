@@ -61,14 +61,14 @@ pipeline {
                 echo "----Building master----"
                 sh 'git checkout master'
                 // --batch-mode doesnt ask release version and take defaults from POM
-                withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                                  credentialsId: 'github-username-pass',
-                                  usernameVariable: 'GIT_USERNAME',
-                                  passwordVariable: 'GIT_PASSWORD'
-                                 ]]) {
-                    sh 'mvn clean verify'
+                //(Pls use single quotes) This way the values also get substituted and are outputted in the logs as masked
+                withCredentials([
+                        usernamePassword(credentialsId: github-username-pass, usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD'),
+                        usernamePassword(credentialsId: maven-user-promoted, usernameVariable: 'promotedUser', passwordVariable: 'promotedPassword')
+                ]) {
+                    sh 'mvn clean verify -Pdocker'
                     //Performing release:prepare/perform in another step to skip test and docker image (which is failing) creation
-                    sh "mvn --batch-mode release:prepare release:perform -DskipTests -Ddocker.skip"
+                    sh "mvn --batch-mode release:prepare release:perform  -Dserver.username='${promotedUser}' -Dserver.password='${promotedPassword}' -DskipTests -Ddocker.skip"
                     sh 'env.VERSION=readMavenPom().getVersion()'
                 }
 
