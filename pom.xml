@@ -32,12 +32,12 @@
 		<repository>
 			<id>internal-release</id>
 			<name>Release Candidate</name>
-			<url>http://localhost:9999/repository/maven-promoted/</url>
+			<url>http://${REPO_BASE_URL}/repository/maven-promoted/</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshot</id>
 			<name>Snapshot Repo</name>
-			<url>http://localhost:9999/repository/maven-snapshots/</url>
+			<url>http://${REPO_BASE_URL}/repository/maven-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
