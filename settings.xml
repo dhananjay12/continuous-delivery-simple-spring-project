@@ -1,0 +1,56 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+			      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <servers>
+    
+    <server>
+      <username>admin</username>
+      <password>admin</password>
+      <id>admin</id>
+    </server>
+
+    <server>
+      <username>user-promoted</username>
+      <password>admin</password>
+      <id>user-promoted</id>
+    </server>
+
+   <server>
+      <username>user-snapshot</username>
+      <password>admin</password>
+      <id>user-snapshot</id>
+    </server>
+      
+  </servers>
+
+  <profiles>
+    <profile>
+      <id>defaultProfile</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+
+      <repositories>
+
+		
+        <repository>
+          <id>user-promoted</id>
+          <url>http://localhost:8081/repository/maven-promoted/</url>
+          <releases>
+            <updatePolicy>always</updatePolicy>
+          </releases>
+        </repository>
+                
+        <repository>
+          <id>user-snapshot</id>
+          <url>http://localhost:8081/repository/maven-snapshots/</url>
+          <releases>
+            <updatePolicy>always</updatePolicy>
+          </releases>
+        </repository>
+                
+      </repositories>
+    </profile>
+  </profiles>
+</settings>
