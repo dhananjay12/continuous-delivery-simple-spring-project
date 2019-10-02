@@ -1,0 +1,7 @@
+FROM jboss_eap:7.1.0
+
+# Cleaning JBoss
+RUN rm -rf $JBOSS_HOME/standalone/deployments/*
+
+# Copy war file
+ADD ./target/ci-cd-spring-project*.war $JBOSS_HOME/standalone/deployments/ROOT.war

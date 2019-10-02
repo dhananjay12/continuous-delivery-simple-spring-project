@@ -1,0 +1,7 @@
+FROM websphere-liberty:18.0.0.4-javaee7
+
+# Copy war file to apps folder
+ADD ./target/ci-cd-spring-project*.war config/apps/ci-cd-spring-project.war
+
+# Define the root context path for application
+RUN sed -i "0,/<\/server>/s/<\/server>/    <webApplication contextRoot=\"\/\" location=\"ci-cd-spring-project.war\" \/>\n\n&/" config/server.xml

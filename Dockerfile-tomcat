@@ -1,0 +1,14 @@
+# Build from official Tomcat base image
+FROM tomcat:8.5-jre8-alpine
+
+# Cleaning Tomcat
+RUN rm -rf $CATALINA_HOME/webapps/* && \
+    rm -rf $CATALINA_HOME/server/webapps/*
+
+# Copy war file to temporary folder
+COPY ./target/ci-cd-spring-project*.war /tmp/ci-cd-spring-project.war
+
+# Unzip service package to the ROOT folder
+RUN mkdir $CATALINA_HOME/webapps/ROOT && \
+    unzip /tmp/ci-cd-spring-project.war -d $CATALINA_HOME/webapps/ROOT && \
+    rm -rf /tmp/ci-cd-spring-project.war
